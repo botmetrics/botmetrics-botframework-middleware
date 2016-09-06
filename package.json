@@ -1,0 +1,38 @@
+{
+  "name": "botmetrics-botframework-middleware",
+  "version": "0.0.1",
+  "description": "BotBuilder Middleware for Botmetrics",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/botmetrics/botmetrics-botframework-middleware.git"
+  },
+  "keywords": [
+    "botbuilder",
+    "bots",
+    "botmetrics"
+  ],
+  "author": "Vlad Shevtsov, Arun Thampi",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/botmetrics/botmetrics-botframework-middleware/issues"
+  },
+  "homepage": "https://github.com/botmetrics/botmetrics-botframework-middleware#readme",
+  "dependencies" : {
+    "request": "2.74.0",
+    "dotenv": "2.0.0",
+    "scoped-http-client": "0.11.0",
+    "botbuilder": "3.2.3",
+    "restify": "4.1.1"
+  },
+  "devDependencies": {
+    "mocha": "^2.1.0",
+    "sinon-chai": "^2.8.0",
+    "sinon": "~1.17.0",
+    "chai": "~2.1.0",
+    "nock": "~7.0.2"
+  }
+}
