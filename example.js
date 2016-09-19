@@ -48,7 +48,7 @@ var connector = new builder.ChatConnector({
     appPassword: process.env.MICROSOFT_APP_PASSWORD
 });
 var bot = new builder.UniversalBot(connector);
-server.post('/facebook/receive', connector.listen());
+server.post('/receive', connector.listen());
 
 //=========================================================
 // Bots Dialogs
@@ -83,6 +83,12 @@ intents.matches(/weather/, [
     },
     function (session, results) {
         session.send('cool');
+    }
+]);
+
+intents.matches(/postback/, [
+    function (session) {
+        session.beginDialog('/postback');
     }
 ]);
 
@@ -121,4 +127,19 @@ bot.dialog('/weather', [
         session.userData.weather = true;
         session.endDialog();
     }
+]);
+
+bot.dialog('/postback', [
+  function (session) {
+      var msg = new builder.Message(session)
+          .textFormat(builder.TextFormat.xml)
+          .attachments([
+              new builder.HeroCard(session)
+                  .title("Hero Card")
+                  .buttons([
+                    builder.CardAction.postBack(session, 'button', 'button')
+                  ])
+          ]);
+      session.endDialog(msg);
+  }
 ]);

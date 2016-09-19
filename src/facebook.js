@@ -38,23 +38,30 @@ module.exports = function(credentials) {
     if(!message) {
       return null
     } else {
-      return {
+      var obj = {
         object: 'page',
         entry: [{
           messaging: [{
             type: message.type,
             sender: message.sourceEvent.sender,
             recipient: message.sourceEvent.recipient,
-            timestamp: message.sourceEvent.timestamp,
-            message: {
-              text: message.text,
-              mid: message.sourceEvent.message.mid,
-              seq: message.sourceEvent.message.seq,
-              attachments: message.attachments
-            }
+            timestamp: message.sourceEvent.timestamp
           }]
         }]
+      };
+
+      if(message.sourceEvent.postback) {
+        obj.entry[0].messaging[0].postback = message.sourceEvent.postback
+      } else {
+        obj.entry[0].messaging[0][message.type] = {
+          text: message.text,
+          mid: message.sourceEvent.message.mid,
+          seq: message.sourceEvent.message.seq,
+          attachments: message.sourceEvent.message.attachments
+        }
       }
+
+      return obj;
     }
   }
 
