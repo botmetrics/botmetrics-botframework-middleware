@@ -33,6 +33,7 @@ describe('Facebook with creds', function() {
 describe('.receive', function() {
   var facebook,
       message,
+      postback,
       statusCode,
       params,
       facebookHookResponse;
@@ -56,7 +57,18 @@ describe('.receive', function() {
       attachments: []
     };
 
-    facebookHookResponse = {
+    postback = {
+      type: 'message',
+      sourceEvent:
+       { sender: { id: '1311098608907965' },
+         recipient: { id: '268855423495782' },
+         timestamp: 1472641403354,
+         postback:
+          { payload: 'payload' } },
+      attachments: []
+    };
+
+    responseMessage = {
       object: 'page',
       entry: [{
         messaging: [{
@@ -74,9 +86,22 @@ describe('.receive', function() {
       }]
     };
 
-    params = JSON.stringify({ event: JSON.stringify(facebookHookResponse), format: 'json' })
+    responsePostback = {
+      object: 'page',
+      entry: [{
+        messaging: [{
+          type: postback.type,
+          sender: postback.sourceEvent.sender,
+          recipient: postback.sourceEvent.recipient,
+          timestamp: postback.sourceEvent.timestamp,
+          postback: {
+            payload: postback.sourceEvent.postback.payload
+          }
+        }]
+      }]
+    };
 
-    scope = nock('http://localhost:3000', {
+    scope = nock(process.env.BOTMETRICS_API_HOST || 'https://www.getbotmetrics.com', {
       reqheaders: {
         'Authorization': 'api-key',
         'Content-Type': 'application/json'
@@ -92,7 +117,17 @@ describe('.receive', function() {
     });
 
     it('should make a call to the Botmetrics API sending a message', function(done) {
+      paramsMessage = JSON.stringify({ event: JSON.stringify(responseMessage), format: 'json' })
       facebook.receive(message, function(err) {
+        expect(err).to.be.undefined;
+        expect(scope.isDone()).to.be.true;
+        done();
+      });
+    });
+
+    it('should make a call to the Botmetrics API sending a postback', function(done) {
+      paramsPostback = JSON.stringify({ event: JSON.stringify(responsePostback), format: 'json' })
+      facebook.receive(postback, function(err) {
         expect(err).to.be.undefined;
         expect(scope.isDone()).to.be.true;
         done();
@@ -107,6 +142,14 @@ describe('.receive', function() {
 
     it('should make a call to the Botmetrics API sending a message', function(done) {
       facebook.receive(message, function(err) {
+        expect(err).to.be.present;
+        expect(scope.isDone()).to.be.true;
+        done();
+      });
+    });
+
+    it('should make a call to the Botmetrics API sending a postback', function(done) {
+      facebook.receive(postback, function(err) {
         expect(err).to.be.present;
         expect(scope.isDone()).to.be.true;
         done();
@@ -157,13 +200,13 @@ describe('.send', function() {
 
     params = JSON.stringify({ event: JSON.stringify(facebookHookResponse), format: 'json' })
 
-    scope = nock('http://localhost:3000', {
+    scope = nock(process.env.BOTMETRICS_API_HOST || 'https://www.getbotmetrics.com', {
       reqheaders: {
         'Authorization': 'api-key',
         'Content-Type': 'application/json'
       }
     })
-    .post('/bots/bot-id/events', params)
+    .post('/bots/bot-id/events')
     .reply(statusCode);
   });
 
