@@ -101,7 +101,7 @@ describe('.receive', function() {
       }]
     };
 
-    scope = nock('http://localhost:3000', {
+    scope = nock(process.env.BOTMETRICS_API_HOST || 'https://www.getbotmetrics.com', {
       reqheaders: {
         'Authorization': 'api-key',
         'Content-Type': 'application/json'
@@ -200,7 +200,7 @@ describe('.send', function() {
 
     params = JSON.stringify({ event: JSON.stringify(facebookHookResponse), format: 'json' })
 
-    scope = nock('http://localhost:3000', {
+    scope = nock(process.env.BOTMETRICS_API_HOST || 'https://www.getbotmetrics.com', {
       reqheaders: {
         'Authorization': 'api-key',
         'Content-Type': 'application/json'
