@@ -1,30 +1,30 @@
 var chai = require('chai');
 var sinon = require('sinon');
 var nock = require('nock');
-var Facebook = require('../src/facebook');
+var FacebookMiddleware = require('../src/facebook_middleware');
 
 chai.use(require('sinon-chai'));
 expect = chai.expect;
 
-describe('Facebook without creds', function() {
+describe('FacebookMiddleware without creds', function() {
   context('botId is not present', function(){
     it('should throw an error', function(done) {
-      expect(Facebook.bind(null, { appKey: 'app-key' })).to.throw('No bot id or api key specified');
+      expect(FacebookMiddleware.bind(null, { appKey: 'app-key' })).to.throw('No bot id or api key specified');
       done()
     })
   });
 
   context('appKey is not present', function(){
     it('should throw an error', function(done) {
-      expect(Facebook.bind(null, { botId: 'bot-id' })).to.throw('No bot id or api key specified');
+      expect(FacebookMiddleware.bind(null, { botId: 'bot-id' })).to.throw('No bot id or api key specified');
       done()
     })
   })
 })
 
-describe('Facebook with creds', function() {
+describe('FacebookMiddleware with creds', function() {
   it('should not throw an error', function(done) {
-    expect(Facebook.bind(null, { botId: 'bot-id', apiKey: 'api-key' })).to.not.throw('No bot id or api key specified');
+    expect(FacebookMiddleware.bind(null, { botId: 'bot-id', apiKey: 'api-key' })).to.not.throw('No bot id or api key specified');
     done()
   })
 
@@ -39,7 +39,7 @@ describe('.receive', function() {
       facebookHookResponse;
 
   beforeEach(function() {
-    facebook = Facebook({
+    facebook = FacebookMiddleware({
       botId: 'bot-id',
       apiKey: 'api-key'
     });
@@ -166,7 +166,7 @@ describe('.send', function() {
       facebookHookResponse;
 
   beforeEach(function() {
-    facebook = Facebook({
+    facebook = FacebookMiddleware({
       botId: 'bot-id',
       apiKey: 'api-key'
     });

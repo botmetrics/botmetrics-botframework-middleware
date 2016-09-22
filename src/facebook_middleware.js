@@ -8,14 +8,14 @@ module.exports = function(credentials) {
   var host = process.env.BOTMETRICS_API_HOST || 'https://www.getbotmetrics.com',
       url  = host + "/bots/" + credentials.botId + "/events",
       http = HttpClient.create(url),
-      Facebook = {};
+      FacebookMiddleware = {};
 
-  Facebook.receive = function(session, next) {
+  FacebookMiddleware.receive = function(session, next) {
     var event = JSON.stringify(facebookReceivedEvent(session));
     sendRequest(event, next);
   }
 
-  Facebook.send = function(session, next) {
+  FacebookMiddleware.send = function(session, next) {
     var event = JSON.stringify(facebookSendEvent(session));
     sendRequest(event, next);
   }
@@ -89,5 +89,5 @@ module.exports = function(credentials) {
     }
   }
 
-  return Facebook
+  return FacebookMiddleware;
 }
