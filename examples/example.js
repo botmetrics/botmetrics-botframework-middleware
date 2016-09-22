@@ -1,10 +1,10 @@
-if (!process.env.botId) {
-  console.log('Error: Specify botId in environment');
+if (!process.env.BOTMETRICS_BOT_ID) {
+  console.log('Error: Specify BOTMETRICS_BOT_ID in environment');
   process.exit(1);
 }
 
-if (!process.env.apiKey) {
-  console.log('Error: Specify apiKey in environment');
+if (!process.env.BOTMETRICS_API_KEY) {
+  console.log('Error: Specify BOTMETRICS_API_KEY in environment');
   process.exit(1);
 }
 
@@ -26,8 +26,8 @@ var restify = require('restify');
 //=========================================================
 
 var FacebookMiddleware = require('../index').FacebookMiddleware({
-  botId: process.env.botId,
-  apiKey: process.env.apiKey
+  botId: process.env.BOTMETRICS_BOT_ID,
+  apiKey: process.env.BOTMETRICS_API_KEY
 });
 
 //=========================================================
@@ -36,7 +36,7 @@ var FacebookMiddleware = require('../index').FacebookMiddleware({
 
 // Setup Restify Server
 var server = restify.createServer();
-server.listen(process.env.port || process.env.PORT || 3000, function () {
+server.listen(process.env.PORT || 3000, function () {
    console.log('%s listening to %s', server.name, server.url);
 });
 
