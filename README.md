@@ -1,17 +1,60 @@
-##Bot preview
-![](http://i.imgur.com/hdERPoh.gif)
-#Updated
-https://www.wevideo.com/view/738147820
-##Example bot. Getting Started
-1. Create a Microsoft account if you don't have one. You can do it here: https://signup.live.com/signup
-2. Go here: https://dev.botframework.com/ and sign in with your credentials.
-3. Register your bot following this instructions: https://docs.botframework.com/en-us/csharp/builder/sdkreference/gettingstarted.html#registering
-4. Add `Facebook messenger` `channel` to channels list on the `My Bots` tab.
-5. Complete the channel setup ![alt tag](https://docs.botframework.com/en-us/images/connector/connector_channel_config_facebook.png)
-6. Put your `Microsoft app_id` and `Microsoft app_password` in `.env` file
-   under `MICROSOFT_APP_ID` and `MICROSOFT_APP_PASSWORD` keys.
-7. Run ```node example.js```, you can specify different port
-   if needed```port=3001 node example.js```.
-8. Run 'Ngrok' tunnel with subdomain you've set when registered your bot(`Messaging endpoint`).
-9. Try to push `Test` button on this page: https://dev.botframework.com/bots.
-   If everything is ok you'll receive `success` message
+# Botmetrics Middleware for Botframework
+
+[Botmetrics](https://www.getbotmetrics.com) is an analytics and
+engagement platform for chatbots.
+
+
+## Installation
+
+Add `botmetrics-botframework-middleware` to your `package.json`
+
+```
+$ npm install --save botmetrics-botframework-middleware
+```
+
+## Usage (Facebook)
+
+Register your Facebook bot with
+[Botmetrics](https://getbotmetrics.com). Once you have done so, navigate to "Bot Settings" and find out your Bot ID and API Key.
+
+Set the following environment variables with the Bot ID and API
+Key respectively.
+
+```
+BOTMETRICS_BOT_ID=your-bot-id
+BOTMETRICS_API_KEY=your-api-key
+```
+
+For Messenger bots, require `FacebookMiddleware` and use the middleware in your bot like so:
+
+
+```javascript
+// Initialize the middleware
+var FacebookMiddleware = require('botmetrics-botframework-middleware').FacebookMiddleware({
+  botId: process.env.BOTMETRICS_BOT_ID,
+  apiKey: process.env.BOTMETRICS_API_KEY
+});
+
+// Initialize the connector and the bot
+var connector = new builder.ChatConnector({
+    appId: process.env.MICROSOFT_APP_ID,
+    appPassword: process.env.MICROSOFT_APP_PASSWORD
+});
+var bot = new builder.UniversalBot(connector);
+
+// Use the middleware
+bot.use(
+  {
+    receive: FacebookMiddleware.receive,
+    send: FacebookMiddleware.send
+  }
+);
+```
+
+## Contributing
+
+Bug reports and pull requests are welcome on GitHub at https://github.com/botmetrics/botmetrics.js. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+
+## License
+
+The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
