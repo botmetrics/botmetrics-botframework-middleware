@@ -1,7 +1,7 @@
 {
   "name": "botmetrics-botframework-middleware",
   "version": "0.0.1",
-  "description": "BotBuilder Middleware for Botmetrics",
+  "description": "Microsoft BotBuilder Middleware for Botmetrics",
   "main": "index.js",
   "scripts": {
     "test": "./script/test"
