@@ -1,5 +1,3 @@
-require('dotenv').config();
-
 if (!process.env.botId) {
   console.log('Error: Specify botId in environment');
   process.exit(1);
@@ -27,7 +25,7 @@ var restify = require('restify');
 // Loading bormetrics middleware module
 //=========================================================
 
-var FacebookMiddleware = require('./index').FacebookMiddleware({
+var FacebookMiddleware = require('../index').FacebookMiddleware({
   botId: process.env.botId,
   apiKey: process.env.apiKey
 });
