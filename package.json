@@ -13,7 +13,11 @@
   "keywords": [
     "botbuilder",
     "bots",
-    "botmetrics"
+    "botmetrics",
+    "facebook",
+    "messenger",
+    "slack",
+    "kik"
   ],
   "author": "Vlad Shevtsov, Arun Thampi",
   "license": "MIT",
