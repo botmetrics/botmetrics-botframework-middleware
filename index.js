@@ -1,1 +1,1 @@
-module.exports.FacebookMiddleware = require('./src/facebook_middleware');
+module.exports.BotmetricsMiddleware = require('./src/botmetrics_middleware');

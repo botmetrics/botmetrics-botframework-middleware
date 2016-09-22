@@ -25,7 +25,7 @@ var restify = require('restify');
 // Loading bormetrics middleware module
 //=========================================================
 
-var FacebookMiddleware = require('../index').FacebookMiddleware({
+var BotmetricsMiddleware = require('../index').BotmetricsMiddleware({
   botId: process.env.BOTMETRICS_BOT_ID,
   apiKey: process.env.BOTMETRICS_API_KEY
 });
@@ -61,8 +61,8 @@ bot.dialog('/', intents);
 
 bot.use(
   {
-    receive: FacebookMiddleware.receive,
-    send: FacebookMiddleware.send
+    receive: BotmetricsMiddleware.receive,
+    send: BotmetricsMiddleware.send
   }
 );
 

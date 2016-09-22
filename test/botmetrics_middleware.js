@@ -1,30 +1,30 @@
 var chai = require('chai');
 var sinon = require('sinon');
 var nock = require('nock');
-var FacebookMiddleware = require('../src/facebook_middleware');
+var BotmetricsMiddleware = require('../src/botmetrics_middleware');
 
 chai.use(require('sinon-chai'));
 expect = chai.expect;
 
-describe('FacebookMiddleware without creds', function() {
+describe('BotmetricsMiddleware without creds', function() {
   context('botId is not present', function(){
     it('should throw an error', function(done) {
-      expect(FacebookMiddleware.bind(null, { appKey: 'app-key' })).to.throw('No bot id or api key specified');
+      expect(BotmetricsMiddleware.bind(null, { appKey: 'app-key' })).to.throw('No bot id or api key specified');
       done()
     })
   });
 
   context('appKey is not present', function(){
     it('should throw an error', function(done) {
-      expect(FacebookMiddleware.bind(null, { botId: 'bot-id' })).to.throw('No bot id or api key specified');
+      expect(BotmetricsMiddleware.bind(null, { botId: 'bot-id' })).to.throw('No bot id or api key specified');
       done()
     })
   })
 })
 
-describe('FacebookMiddleware with creds', function() {
+describe('BotmetricsMiddleware with creds', function() {
   it('should not throw an error', function(done) {
-    expect(FacebookMiddleware.bind(null, { botId: 'bot-id', apiKey: 'api-key' })).to.not.throw('No bot id or api key specified');
+    expect(BotmetricsMiddleware.bind(null, { botId: 'bot-id', apiKey: 'api-key' })).to.not.throw('No bot id or api key specified');
     done()
   })
 
@@ -39,7 +39,7 @@ describe('.receive', function() {
       facebookHookResponse;
 
   beforeEach(function() {
-    facebook = FacebookMiddleware({
+    facebook = BotmetricsMiddleware({
       botId: 'bot-id',
       apiKey: 'api-key'
     });
@@ -54,6 +54,7 @@ describe('.receive', function() {
           { mid: 'mid.1472641403343:681af9635802378a00',
             seq: 954,
             text: 'change name' } },
+      source: 'facebook',
       attachments: []
     };
 
@@ -65,6 +66,7 @@ describe('.receive', function() {
          timestamp: 1472641403354,
          postback:
           { payload: 'payload' } },
+      source: 'facebook',
       attachments: []
     };
 
@@ -166,7 +168,7 @@ describe('.send', function() {
       facebookHookResponse;
 
   beforeEach(function() {
-    facebook = FacebookMiddleware({
+    facebook = BotmetricsMiddleware({
       botId: 'bot-id',
       apiKey: 'api-key'
     });
@@ -178,7 +180,8 @@ describe('.send', function() {
           user: { id: '1311098608907965', name: 'Vlad Shevtsov' },
           bot: { id: '268855423495782', name: 'facebook' },
         },
-      text: 'Hi! What is your name?'
+      text: 'Hi! What is your name?',
+      source: 'facebook'
     };
 
     facebookHookResponse = {

@@ -12,9 +12,9 @@ Add `botmetrics-botframework-middleware` to your `package.json`
 $ npm install --save botmetrics-botframework-middleware
 ```
 
-## Usage (Facebook)
+## Usage
 
-Register your Facebook bot with
+Register your bot with
 [Botmetrics](https://getbotmetrics.com). Once you have done so, navigate to "Bot Settings" and find out your Bot ID and API Key.
 
 Set the following environment variables with the Bot ID and API
@@ -25,12 +25,11 @@ BOTMETRICS_BOT_ID=your-bot-id
 BOTMETRICS_API_KEY=your-api-key
 ```
 
-For Messenger bots, require `FacebookMiddleware` and use the middleware in your bot like so:
-
+Require `botmetrics-botframework-middleware` and use the middleware in your bot like so:
 
 ```javascript
 // Initialize the middleware
-var FacebookMiddleware = require('botmetrics-botframework-middleware').FacebookMiddleware({
+var BotmetricsMiddleware = require('botmetrics-botframework-middleware').BotmetricsMiddleware({
   botId: process.env.BOTMETRICS_BOT_ID,
   apiKey: process.env.BOTMETRICS_API_KEY
 });
@@ -45,11 +44,22 @@ var bot = new builder.UniversalBot(connector);
 // Use the middleware
 bot.use(
   {
-    receive: FacebookMiddleware.receive,
-    send: FacebookMiddleware.send
+    receive: BotmetricsMiddleware.receive,
+    send: BotmetricsMiddleware.send
   }
 );
 ```
+
+## Examples
+
+To run the example, run the following command:
+
+```
+$ PORT=3000 node examples/example.js
+```
+
+Make sure you have `ngrok` running which tunnels to port 3000 and make
+sure your bot is set up correctly using Bot Framework.
 
 ## Contributing
 
