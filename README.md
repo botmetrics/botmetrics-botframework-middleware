@@ -3,6 +3,8 @@
 [Botmetrics](https://www.getbotmetrics.com) is an analytics and
 engagement platform for chatbots.
 
+[![Build
+Status](https://travis-ci.org/botmetrics/botmetrics-botframework-middleware.svg?branch=master)](https://travis-ci.org/botmetrics/botmetrics-botframework-middleware)
 
 ## Installation
 
