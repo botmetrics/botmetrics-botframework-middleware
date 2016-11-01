@@ -52,6 +52,14 @@ bot.use(
 );
 ```
 
+## Setting your API Host (for Self-Hosting)
+
+If you are using your own self-hosted version of Botmetrics, remember to
+set the `BOTMETRICS_API_HOST` environment variable to your host (If you
+have hosted your Botmetrics instance at
+`https://my-botmetrics-instance.herokuapp.com`, set
+`BOTMETRICS_API_HOST` to `https://my-botmetrics-instance.herokuapp.com`.
+
 ## Examples
 
 To run the example, run the following command:
