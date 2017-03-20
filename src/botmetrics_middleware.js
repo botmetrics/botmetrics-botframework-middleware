@@ -35,10 +35,13 @@ module.exports = function(credentials) {
          header('Content-Type', 'application/json').
          post(JSON.stringify({event: event, format: 'json'}))(function(err, resp, body) {
            if(err) {
+             console.log("error sending botmetrics event", err);
              next(err);
            } else if (resp.statusCode != 202) {
+             console.log("error sending botmetrics event, wrong status code", resp.statusCode);
              next(new Error("Unexpected Status Code from Botmetrics API"));
            } else {
+             console.log("successfully sent to botmetrics API");
              next();
            }
          });
